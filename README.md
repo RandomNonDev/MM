@@ -1,36 +1,27 @@
-# TheBridge
-TheBridge PocketMine Plugin
+# MurderMystery
+MurderMystery PocketMine Plugin
 
-# Whats TheBridge?
-The Bridge is a minigame. It is a type of duel which involves 2 teams attempting to score goals on the opposite side by crossing a 1 block-wide bridge while attempting to protect their own goal.
+# Whats MurderMystery?
+In this game mode, players must survive and defeat the murderer, before they are murdered themselves!
 
 # Commands
 Command | Description | Permission
 --- | --- | ---
-`/tb create` | Create new arena. | thebridge.set
-`/tb delete` | Delete arena. | thebridge.set
-`/tb quit` | Leave from game. | Default
-`/tb join` | Join to game. | Default
-`/tb setspawn` | Set position of spawn position a team. | thebridge.set
-`/tb setgoal` | Set position of goal a team. | thebridge.set
-`/tb setworld` | Set world name of arena. | thebridge.set
-`/tb sethub` | Set hub position. | thebridge.set
-`/tb reload` | Reload all arena. | thebridge.set
+`/mm create` | Create new arena. | thebridge.set
+`/mm delete` | Delete arena. | thebridge.set
+`/mm quit` | Leave from game. | Default
+`/mm join` | Join to game. | Default
+`/mm setspawn` | Set position of spawn position a team. | thebridge.set
+`/mm setgoal` | Set position of goal a team. | thebridge.set
+`/mm setworld` | Set world name of arena. | thebridge.set
+`/mm sethub` | Set hub position. | thebridge.set
+`/mm reload` | Reload all arena. | thebridge.set
 
 ## Features
 - [X] All basics of TheBridge game
 - [X] In-Game scoreboard
 - [X] Configurable
 - [ ] Save Kills, Wins, Goals in Database
-
-## Suggestions from Github Users
-- [ ] Cosmetics
-- [ ] Custom kit/Custom in-game inventory
-- [ ] In-Game BossBar
-- [ ] Doubles/2V2
-- [ ] SpectatorCore
-- [ ] Api/getKills/getWins of a player
-- [ ] Xp and coins after wining or killing a player
 
 # Issues or suggestions 
 found an error or wanna suggest a features that sould be Added
