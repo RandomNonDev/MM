@@ -35,28 +35,6 @@ class EventListener implements Listener{
     }
 
     /**
-     * @param BlockPlaceEvent $event
-     */
-    public function onPlace(BlockPlaceEvent $event){
-        $player = $event->getPlayer();
-        if(($game = TheBridge::getInstance()->getPlayerGame($player)) instanceof Game){
-            if($game->phase == "LOBBY" || $game->phase == "COUNTDOWN" || $game->phase == "RESTARTING"){
-                $event->cancel();
-                return;
-            }
-
-            foreach (["red","blue"] as $team){
-                if($event->getBlock()->getPosition()->distance($game->getPureArenaInfo()[$team . "goal"]) < 10){
-                    $event->cancel();
-                    $player->sendMessage(TextFormat::RED . "You cant place block here!");
-                    return;
-                }
-            }
-            $game->placedblock[Utils::vectorToString($event->getBlock()->getPosition()->asVector3())] = $event->getBlock()->getPosition()->asVector3();
-        }
-    }
-
-    /**
      * @param BlockBreakEvent $event
      */
     public function onBreak(BlockBreakEvent $event){
@@ -117,34 +95,6 @@ class EventListener implements Listener{
         if(($game = TheBridge::getInstance()->getPlayerGame($player)) instanceof Game) {
             $game->broadcastMessage($player, $event->getMessage());
             $event->cancel();
-        }
-    }
-
-    /**
-     * @param PlayerMoveEvent $event
-     */
-    public function onMove(PlayerMoveEvent $event){
-        $player = $event->getPlayer();
-        if(($game = TheBridge::getInstance()->getPlayerGame($player)) instanceof Game) {
-            if($game->phase !== "RUNNING"){
-                return;
-            }
-            /** @var Vector3 $owngoal */
-            $owngoal = $game->getPureArenaInfo()[$game->getTeam($player) . "goal"];
-            /** @var Vector3 $enemygoal */
-            $enemygoal = $game->getPureArenaInfo()[Utils::getEnemyTeam($game->getTeam($player)) . "goal"];
-            if($player->getLocation()->distance($owngoal) <= 3){
-                $player->sendMessage(TextFormat::RED . "You cant score to own goal!");
-                $game->respawnPlayer($player, true);
-                return;
-            }
-
-            if($player->getLocation()->distance($enemygoal) <= 3) {
-                if ($game->addGoal($player)) {
-                    $game->scoredname = $player->getName();
-                    $game->sendAllCages();
-                }
-            }
         }
     }
 
