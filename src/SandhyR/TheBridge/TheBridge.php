@@ -34,7 +34,7 @@ class TheBridge extends PluginBase{
         }
         @mkdir($this->getDataFolder() . "arenas/");
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
-        $this->getServer()->getCommandMap()->register("thebridge", new TheBridgeCommand($this, "thebridge", "TheBridge Command", ["tb"]));
+        $this->getServer()->getCommandMap()->register("murdermystery", new TheBridgeCommand($this, "murdermystery", "Murder Mystery Command", ["mm"]));
         foreach (glob($this->getDataFolder() . "arenas/*.json") as $location) {
             $fileContents = file_get_contents($location);
             $json = json_decode($fileContents, true);
