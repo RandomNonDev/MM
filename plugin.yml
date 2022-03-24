@@ -1,9 +1,10 @@
-name: TheBridge
+name: MurderMystery
 main: SandhyR\TheBridge\TheBridge
-author: SandhyR
+author: SandhyR, RandomNonDev
 api: 4.0.0
 version: 1.0
+description: TB TO MM
 
 permissions:
-  thebridge.set:
+  murdermystery.set:
     default: op
