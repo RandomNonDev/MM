@@ -81,12 +81,9 @@ class Game
      * @param string|null $arenaname
      * @param Position|null $hub
      */
-    public function __construct(?Vector3 $bluespawn = null, ?Vector3 $redspawn = null, ?Vector3 $bluegoal = null, ?Vector3 $redgoal = null, ?string $worldname = null, ?string $arenaname = null, ?Position $hub = null)
+    public function __construct(?Vector3 $spawn, ?string $worldname = null, ?string $arenaname = null, ?Position $hub = null)
     {
-        $this->arenainfo["bluespawn"] = $bluespawn;
-        $this->arenainfo["redspawn"] = $redspawn;
-        $this->arenainfo["bluegoal"] = $bluegoal;
-        $this->arenainfo["redgoal"] = $redgoal;
+        $this->arenainfo["spawn"] = $spawn;
         $this->arenainfo["worldname"] = $worldname;
         $this->arenainfo["arenaname"] = $arenaname;
         $this->arenainfo["hub"] = $hub;
@@ -98,30 +95,14 @@ class Game
     /**
      * @return bool
      */
-    public function isValidArena(): bool
-    {
-        if (($this->arenainfo["bluespawn"] instanceof Vector3) and ($this->arenainfo["redspawn"] instanceof Vector3) and ($this->arenainfo["bluegoal"] instanceof Vector3) and ($this->arenainfo["redgoal"] instanceof Vector3) and (is_string($this->arenainfo["worldname"]) and (is_string($this->arenainfo["arenaname"]))) and ($this->arenainfo["hub"] instanceof Position)) {
-            return true;
-        }
-        return false;
-    }
 
     /**
      * @param string $team
      * @param Vector3 $pos
      */
-    public function setSpawnPos(string $team, Vector3 $pos)
+    public function setSpawnPos(Vector3 $pos)
     {
-        $this->arenainfo[$team . "spawn"] = $pos;
-    }
-
-    /**
-     * @param string $team
-     * @param Vector3 $pos
-     */
-    public function setGoalPos(string $team, Vector3 $pos)
-    {
-        $this->arenainfo[$team . "goal"] = $pos;
+        $this->arenainfo["spawn"] = $pos;
     }
 
     /**
@@ -197,13 +178,13 @@ class Game
             case "LOBBY":
                 foreach ($this->players as $player) {
                     if ($player->isOnline()) {
-                        ScoreFactory::setObjective($player, TextFormat::YELLOW . TextFormat::BOLD . "THE BRIDGE");
+                        ScoreFactory::setObjective($player, TextFormat::YELLOW . TextFormat::BOLD . "MURDER MYSTERY");
                         ScoreFactory::setScoreLine($player, 1, TextFormat::WHITE . "Players: " . TextFormat::GREEN . count($this->players) . "/2");
                         ScoreFactory::setScoreLine($player, 2, TextFormat::WHITE . "Map: " . TextFormat::GREEN . $this->arenainfo["arenaname"]);
                         ScoreFactory::setScoreLine($player, 3, " ");
                         ScoreFactory::setScoreLine($player, 4, TextFormat::RED . "Waiting for more players..");
                         ScoreFactory::setScoreLine($player, 5, "      ");
-                        ScoreFactory::setScoreLine($player, 6, "Mode: " . TextFormat::GREEN . "Solo");
+                        ScoreFactory::setScoreLine($player, 6, "Mode: " . TextFormat::GREEN . "Normal");
                         ScoreFactory::setScoreLine($player, 7, "    ");
                         ScoreFactory::setScoreLine($player, 8, TextFormat::YELLOW . "play.yourservername.com");
                         ScoreFactory::sendObjective($player);
@@ -214,13 +195,13 @@ class Game
             case "COUNTDOWN":
                 foreach ($this->players as $player) {
                     if ($player->isOnline()) {
-                        ScoreFactory::setObjective($player, TextFormat::YELLOW . TextFormat::BOLD . "THE BRIDGE");
+                        ScoreFactory::setObjective($player, TextFormat::YELLOW . TextFormat::BOLD . "MURDER MYSTERY");
                         ScoreFactory::setScoreLine($player, 1, TextFormat::WHITE . "Players: " . TextFormat::GREEN . count($this->players) . "/2");
                         ScoreFactory::setScoreLine($player, 2, TextFormat::WHITE . "Map: " . TextFormat::GREEN . $this->arenainfo["arenaname"]);
                         ScoreFactory::setScoreLine($player, 3, "    ");
                         ScoreFactory::setScoreLine($player, 4, "Starting in " . TextFormat::GREEN . $this->countdown . "s");
                         ScoreFactory::setScoreLine($player, 5, "  ");
-                        ScoreFactory::setScoreLine($player, 6, "Mode: " . TextFormat::GREEN . "Solo");
+                        ScoreFactory::setScoreLine($player, 6, "Mode: " . TextFormat::GREEN . "Normal");
                         ScoreFactory::setScoreLine($player, 7, " ");
                         ScoreFactory::setScoreLine($player, 8, TextFormat::YELLOW . "play.yourservername.com");
                         ScoreFactory::sendObjective($player);
@@ -237,7 +218,7 @@ class Game
                 }
                 --$this->countdown;
                 break;
-            case "RUNNING":
+            case "RUNNING": // this way will be done soon!
                 foreach ($this->players as $player) {
                     if ($player->isOnline()) {
                         if ($this->cage) {
